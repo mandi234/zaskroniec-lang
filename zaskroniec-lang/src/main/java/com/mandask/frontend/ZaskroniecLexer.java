@@ -1,9 +1,10 @@
-// Generated from C:/Users/Kamil/Desktop/Studia Magisterskie/JFK/Project2/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
+package com.mandask.frontend;
+
+// Generated from C:/Workspace/University/Zaskroniec/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;

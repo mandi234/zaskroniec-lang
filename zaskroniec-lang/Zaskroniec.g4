@@ -3,7 +3,7 @@ grammar Zaskroniec;
 
 file: method* EOF;
 
-method: 'function' NAME args_declaration block;
+method: 'funksssja' NAME args_declaration block;
 
 block: '{' statement* '}';
 

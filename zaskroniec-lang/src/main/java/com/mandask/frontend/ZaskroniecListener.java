@@ -1,4 +1,4 @@
-// Generated from C:/Users/Kamil/Desktop/Studia Magisterskie/JFK/Project2/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+package com.mandask.frontend;// Generated from C:/Workspace/University/Zaskroniec/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
