@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         //ANTLRFileStream input = new ANTLRFileStream("function twojstary(ab, cd){return 2;}");
-        String input = "function twojstary(ab, cd){return 2;}";
+        String input = "";
         ZaskroniecLexer lexer = new ZaskroniecLexer(CharStreams.fromString(input));
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -22,7 +22,7 @@ public class Main {
         ParseTree tree = parser.file();
         System.out.println(tree.toStringTree(parser));
 
-       // ParseTreeWalker walker = new ParseTreeWalker();
-        //walker.walk(new LLVMActions(),tree);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(new LLVMActions(),tree);
     }
 }

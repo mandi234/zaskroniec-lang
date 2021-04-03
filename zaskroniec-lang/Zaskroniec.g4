@@ -1,40 +1,26 @@
-// Define a grammar called Hello
 grammar Zaskroniec;
 
-file: method* EOF;
+file: (stmt? ';')* EOF;
 
-method: 'funksssja' NAME args_declaration block;
+stmt: print_stmt
+    | assign_stmt;
 
-block: '{' statement* '}';
+print_stmt: PRINT ID;
 
-statement: (return_statement) (';' | NEWLINE);
+assign_stmt: ID ASSIGN number;
 
-return_statement: 'return' expression;
+number: REAL
+      | INT;
 
-expression
-    : paraphrase
-    | expression MULTIPLY expression
-    | expression DIVIDE expression
-    | expression MODULO expression
+PRINT: 'wypisssz';
 
-    | expression ADD expression
-    | expression SUBTRACT expression
-    | NUMBER
-    | NAME
+ID: [a-zA-Z_][a-zA-Z_0-9]+;
+
+WHITESPACE: [ \t\n]* -> skip;
+
+REAL: '0'..'9'+'.''0'..'9'+
     ;
 
-paraphrase: '(' expression ')';
-
-args_declaration: '(' NAME? (',' NAME)* ')';
-
-NAME: [a-zA-Z_][a-zA-Z_0-9]+;
-NUMBER: [0-9]+;
-
-WHITESPACE: [ \t]* -> skip;
-
-ADD: '+';
-SUBTRACT: '-';
-MULTIPLY: '*';
-DIVIDE: '/';
-MODULO: '%';
-NEWLINE : [\n\r] -> skip;
+INT: '0'..'9'+
+    ;
+ASSIGN : '=';

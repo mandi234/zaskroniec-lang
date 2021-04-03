@@ -1,4 +1,5 @@
-package com.mandask.frontend;// Generated from C:/Workspace/University/Zaskroniec/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+// Generated from C:/Workspace/University/Zaskroniec/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+package com.mandask.frontend;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -17,73 +18,43 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitFile(ZaskroniecParser.FileContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#method}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterMethod(ZaskroniecParser.MethodContext ctx);
+	void enterStmt(ZaskroniecParser.StmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#method}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitMethod(ZaskroniecParser.MethodContext ctx);
+	void exitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#block}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#print_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterBlock(ZaskroniecParser.BlockContext ctx);
+	void enterPrint_stmt(ZaskroniecParser.Print_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#block}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#print_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitBlock(ZaskroniecParser.BlockContext ctx);
+	void exitPrint_stmt(ZaskroniecParser.Print_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#statement}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#assign_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement(ZaskroniecParser.StatementContext ctx);
+	void enterAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#statement}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#assign_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement(ZaskroniecParser.StatementContext ctx);
+	void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#return_statement}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void enterReturn_statement(ZaskroniecParser.Return_statementContext ctx);
+	void enterNumber(ZaskroniecParser.NumberContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#return_statement}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void exitReturn_statement(ZaskroniecParser.Return_statementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpression(ZaskroniecParser.ExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpression(ZaskroniecParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#paraphrase}.
-	 * @param ctx the parse tree
-	 */
-	void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#paraphrase}.
-	 * @param ctx the parse tree
-	 */
-	void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#args_declaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgs_declaration(ZaskroniecParser.Args_declarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#args_declaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgs_declaration(ZaskroniecParser.Args_declarationContext ctx);
+	void exitNumber(ZaskroniecParser.NumberContext ctx);
 }

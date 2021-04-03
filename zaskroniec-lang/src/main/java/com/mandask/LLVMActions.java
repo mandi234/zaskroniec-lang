@@ -5,6 +5,9 @@ import com.mandask.frontend.ZaskroniecListener;
 import com.mandask.frontend.ZaskroniecParser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 
 enum VarType{ INT, REAL, UNKNOWN}
 
@@ -17,7 +20,12 @@ class Value{
     }
 }
 
-public class LLVMActions extends ZaskroniecBaseListener {
+public class LLVMActions extends ZaskroniecBaseListener{
+
+    HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    Stack<Value> stack = new Stack<Value>();
+
+
     @Override
     public void enterFile(ZaskroniecParser.FileContext ctx) {
 
@@ -25,76 +33,72 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitFile(ZaskroniecParser.FileContext ctx) {
+        System.out.println(LLVMGenerator.generate());
+    }
+
+    @Override
+    public void enterStmt(ZaskroniecParser.StmtContext ctx) {
 
     }
 
     @Override
-    public void enterMethod(ZaskroniecParser.MethodContext ctx) {
+    public void exitStmt(ZaskroniecParser.StmtContext ctx) {
 
     }
 
     @Override
-    public void exitMethod(ZaskroniecParser.MethodContext ctx) {
+    public void enterPrint_stmt(ZaskroniecParser.Print_stmtContext ctx) {
 
     }
 
     @Override
-    public void enterBlock(ZaskroniecParser.BlockContext ctx) {
+    public void exitPrint_stmt(ZaskroniecParser.Print_stmtContext ctx) {
+        String ID = ctx.ID().getText();
+        VarType type = variables.get(ID);
+        if( type != null ) {
+            if( type == VarType.INT ){
+                LLVMGenerator.printf_i32( ID );
+            }
+            if( type == VarType.REAL ){
+                LLVMGenerator.printf_double( ID );
+            }
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable "+ID);
+        }
+    }
+
+    @Override
+    public void enterAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) {
 
     }
 
     @Override
-    public void exitBlock(ZaskroniecParser.BlockContext ctx) {
+    public void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) {
+        String ID = ctx.ID().getText();
+        Value v = stack.pop();
+        variables.put(ID, v.type);
+        if( v.type == VarType.INT ){
+            LLVMGenerator.declare_i32(ID);
+            LLVMGenerator.assign_i32(ID, v.name);
+        }
+        if( v.type == VarType.REAL ){
+            LLVMGenerator.declare_double(ID);
+            LLVMGenerator.assign_double(ID, v.name);
+        }
+    }
+
+    @Override
+    public void enterNumber(ZaskroniecParser.NumberContext ctx) {
 
     }
 
     @Override
-    public void enterStatement(ZaskroniecParser.StatementContext ctx) {
+    public void exitNumber(ZaskroniecParser.NumberContext ctx) {
 
     }
 
-    @Override
-    public void exitStatement(ZaskroniecParser.StatementContext ctx) {
-
-    }
-
-    @Override
-    public void enterReturn_statement(ZaskroniecParser.Return_statementContext ctx) {
-
-    }
-
-    @Override
-    public void exitReturn_statement(ZaskroniecParser.Return_statementContext ctx) {
-
-    }
-
-    @Override
-    public void enterExpression(ZaskroniecParser.ExpressionContext ctx) {
-
-    }
-
-    @Override
-    public void exitExpression(ZaskroniecParser.ExpressionContext ctx) {
-
-    }
-
-    @Override
-    public void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx) {
-
-    }
-
-    @Override
-    public void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx) {
-
-    }
-
-    @Override
-    public void enterArgs_declaration(ZaskroniecParser.Args_declarationContext ctx) {
-
-    }
-
-    @Override
-    public void exitArgs_declaration(ZaskroniecParser.Args_declarationContext ctx) {
-
+    private void error(int line, String msg) {
+        System.err.println("Error, line "+line+", "+msg);
+        System.exit(1);
     }
 }
