@@ -1,4 +1,5 @@
-// Generated from C:/Users/Kamil/Desktop/Studia Magisterskie/JFK/Project2/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+// Generated from C:/Workspace/University/Zaskroniec/zaskroniec-lang\Zaskroniec.g4 by ANTLR 4.9.1
+package com.mandask.frontend;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -27,85 +28,49 @@ public class ZaskroniecBaseListener implements ZaskroniecListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMethod(ZaskroniecParser.MethodContext ctx) { }
+	@Override public void enterStmt(ZaskroniecParser.StmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMethod(ZaskroniecParser.MethodContext ctx) { }
+	@Override public void exitStmt(ZaskroniecParser.StmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBlock(ZaskroniecParser.BlockContext ctx) { }
+	@Override public void enterPrint_stmt(ZaskroniecParser.Print_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBlock(ZaskroniecParser.BlockContext ctx) { }
+	@Override public void exitPrint_stmt(ZaskroniecParser.Print_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatement(ZaskroniecParser.StatementContext ctx) { }
+	@Override public void enterAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatement(ZaskroniecParser.StatementContext ctx) { }
+	@Override public void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterReturn_statement(ZaskroniecParser.Return_statementContext ctx) { }
+	@Override public void enterNumber(ZaskroniecParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitReturn_statement(ZaskroniecParser.Return_statementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpression(ZaskroniecParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpression(ZaskroniecParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArgs_declaration(ZaskroniecParser.Args_declarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArgs_declaration(ZaskroniecParser.Args_declarationContext ctx) { }
+	@Override public void exitNumber(ZaskroniecParser.NumberContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,0 +1,10 @@
+T__0=1
+PRINT=2
+ID=3
+WHITESPACE=4
+REAL=5
+INT=6
+ASSIGN=7
+';'=1
+'wypisssz'=2
+'='=7
