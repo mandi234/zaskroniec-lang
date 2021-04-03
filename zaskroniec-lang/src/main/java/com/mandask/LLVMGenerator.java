@@ -37,15 +37,15 @@ public class LLVMGenerator {
         main_text += "%"+id+" = alloca i32\n";
     }
 
-    public static void assign_i32(String id, String name) {
-        main_text += "store i32 "+name+", i32* %"+id+"\n";
+    public static void assign_i32(String id, String value) {
+        main_text += "store i32 "+value+", i32* %"+id+"\n";
     }
 
     public static void declare_double(String id) {
         main_text += "%"+id+" = alloca double\n";
     }
 
-    public static void assign_double(String id, String name) {
-        main_text += "store double "+name+", double* %"+id+"\n";
+    public static void assign_double(String id, String value) {
+        main_text += "store double "+value+", double* %"+id+"\n";
     }
 }

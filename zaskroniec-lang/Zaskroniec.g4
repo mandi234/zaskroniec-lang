@@ -16,7 +16,7 @@ PRINT: 'wypisssz';
 
 ID: [a-zA-Z_][a-zA-Z_0-9]+;
 
-WHITESPACE: [ \t\n]* -> skip;
+WHITESPACE: [ \t\n\r]* -> skip;
 
 REAL: '0'..'9'+'.''0'..'9'+
     ;

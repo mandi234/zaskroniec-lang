@@ -94,7 +94,11 @@ public class LLVMActions extends ZaskroniecBaseListener{
 
     @Override
     public void exitNumber(ZaskroniecParser.NumberContext ctx) {
-
+        if (ctx.REAL() == null) {
+            stack.push( new Value(ctx.INT().getText(), VarType.INT) );
+        } else {
+            stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
+        }
     }
 
     private void error(int line, String msg) {
