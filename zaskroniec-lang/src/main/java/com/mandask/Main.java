@@ -8,7 +8,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Main {
 
@@ -24,5 +28,10 @@ public class Main {
 
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new LLVMActions(),tree);
+        String outString = LLVMGenerator.generate();
+
+        try (PrintWriter outFile = new PrintWriter("test.ll")) {
+            outFile.println(outString);
+        }
     }
 }
