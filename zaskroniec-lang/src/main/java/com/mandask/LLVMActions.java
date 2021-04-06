@@ -3,7 +3,6 @@ package com.mandask;
 import com.mandask.frontend.ZaskroniecBaseListener;
 import com.mandask.frontend.ZaskroniecListener;
 import com.mandask.frontend.ZaskroniecParser;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -20,7 +19,7 @@ class Value{
     }
 }
 
-public class LLVMActions extends ZaskroniecBaseListener{
+public class LLVMActions extends ZaskroniecBaseListener  {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
@@ -44,6 +43,20 @@ public class LLVMActions extends ZaskroniecBaseListener{
     @Override
     public void exitStmt(ZaskroniecParser.StmtContext ctx) {
 
+    }
+
+    @Override
+    public void enterScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) {
+
+    }
+
+    @Override
+    public void exitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) {
+        String ID = ctx.ID().getText();
+        if(!variables.containsKey(ID))
+            LLVMGenerator.declare_i32(ID);
+        variables.put(ID, VarType.INT );
+        LLVMGenerator.scanf_i32(ID);
     }
 
     @Override

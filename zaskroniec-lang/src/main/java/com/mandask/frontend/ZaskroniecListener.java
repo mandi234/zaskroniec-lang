@@ -28,6 +28,16 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#scan_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterScan_stmt(ZaskroniecParser.Scan_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#scan_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ZaskroniecParser#print_stmt}.
 	 * @param ctx the parse tree
 	 */

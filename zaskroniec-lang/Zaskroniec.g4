@@ -3,7 +3,10 @@ grammar Zaskroniec;
 file: (stmt? ';')* EOF;
 
 stmt: print_stmt
+    | scan_stmt
     | assign_stmt;
+
+scan_stmt: SCAN ID;
 
 print_stmt: PRINT ID;
 
@@ -11,6 +14,8 @@ assign_stmt: ID ASSIGN number;
 
 number: REAL
       | INT;
+
+SCAN : 'ssskanuj';
 
 PRINT: 'wypisssz';
 
@@ -23,4 +28,6 @@ REAL: '0'..'9'+'.''0'..'9'+
 
 INT: '0'..'9'+
     ;
+
 ASSIGN : '=';
+
