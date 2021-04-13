@@ -24,6 +24,11 @@ public class LLVMGenerator {
         reg++;
     }
 
+    static void scanf_double(String id){
+        main_text += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strpd, i64 0, i64 0), double* %"+id+")\n";
+        reg++;
+    }
+
 
     static String generate() {
         String text = "";
