@@ -19,7 +19,7 @@ class Value{
     }
 }
 
-public class LLVMActions extends ZaskroniecBaseListener  {
+public class LLVMActions extends ZaskroniecBaseListener {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
@@ -46,17 +46,31 @@ public class LLVMActions extends ZaskroniecBaseListener  {
     }
 
     @Override
-    public void enterScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) {
+    public void enterScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) {
 
     }
 
     @Override
-    public void exitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) {
+    public void exitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) {
         String ID = ctx.ID().getText();
         if(!variables.containsKey(ID))
             LLVMGenerator.declare_i32(ID);
         variables.put(ID, VarType.INT );
         LLVMGenerator.scanf_i32(ID);
+    }
+
+    @Override
+    public void enterScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) {
+
+    }
+
+    @Override
+    public void exitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) {
+        String ID = ctx.ID().getText();
+        if(!variables.containsKey(ID))
+            LLVMGenerator.declare_double(ID);
+        variables.put(ID, VarType.INT );
+        LLVMGenerator.scanf_double(ID);
     }
 
     @Override

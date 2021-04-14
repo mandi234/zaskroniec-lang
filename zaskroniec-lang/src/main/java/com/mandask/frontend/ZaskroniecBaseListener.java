@@ -40,25 +40,25 @@ public class ZaskroniecBaseListener implements ZaskroniecListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) { }
+	@Override public void enterScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) { }
+	@Override public void exitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType_declaration(ZaskroniecParser.Type_declarationContext ctx) { }
+	@Override public void enterScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType_declaration(ZaskroniecParser.Type_declarationContext ctx) { }
+	@Override public void exitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

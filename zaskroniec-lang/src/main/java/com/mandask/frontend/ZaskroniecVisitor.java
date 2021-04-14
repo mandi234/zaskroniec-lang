@@ -23,17 +23,17 @@ public interface ZaskroniecVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ZaskroniecParser#scan_stmt}.
+	 * Visit a parse tree produced by {@link ZaskroniecParser#scan_int_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx);
+	T visitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ZaskroniecParser#type_declaration}.
+	 * Visit a parse tree produced by {@link ZaskroniecParser#scan_real_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType_declaration(ZaskroniecParser.Type_declarationContext ctx);
+	T visitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ZaskroniecParser#print_stmt}.
 	 * @param ctx the parse tree

@@ -31,14 +31,14 @@ public class ZaskroniecBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx) { return visitChildren(ctx); }
+	@Override public T visitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitType_declaration(ZaskroniecParser.Type_declarationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

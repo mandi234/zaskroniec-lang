@@ -28,25 +28,25 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#scan_stmt}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#scan_int_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterScan_stmt(ZaskroniecParser.Scan_stmtContext ctx);
+	void enterScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#scan_stmt}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#scan_int_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitScan_stmt(ZaskroniecParser.Scan_stmtContext ctx);
+	void exitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ZaskroniecParser#type_declaration}.
+	 * Enter a parse tree produced by {@link ZaskroniecParser#scan_real_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterType_declaration(ZaskroniecParser.Type_declarationContext ctx);
+	void enterScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ZaskroniecParser#type_declaration}.
+	 * Exit a parse tree produced by {@link ZaskroniecParser#scan_real_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitType_declaration(ZaskroniecParser.Type_declarationContext ctx);
+	void exitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ZaskroniecParser#print_stmt}.
 	 * @param ctx the parse tree

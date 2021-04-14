@@ -3,14 +3,13 @@ grammar Zaskroniec;
 file: (stmt? ';')* EOF;
 
 stmt: print_stmt
-    | scan_stmt
+    | scan_int_stmt
+    | scan_real_stmt
     | assign_stmt;
 
-scan_stmt: SCAN type_declaration ID;
+scan_int_stmt: SCAN INT_DECLARATION ID;
 
-type_declaration: REAL_DECLARATION
-                | INT_DECLATATION
-                ;
+scan_real_stmt: SCAN REAL_DECLARATION ID;
 
 print_stmt: PRINT ID;
 
@@ -25,7 +24,7 @@ PRINT: 'wypisssz';
 
 REAL_DECLARATION : 'dabl';
 
-INT_DECLATATION : 'int';
+INT_DECLARATION : 'int';
 
 ID: [a-zA-Z_][a-zA-Z_0-9]+;
 

@@ -17,14 +17,14 @@ public class ZaskroniecParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, SCAN=2, PRINT=3, REAL_DECLARATION=4, INT_DECLATATION=5, ID=6, 
+		T__0=1, SCAN=2, PRINT=3, REAL_DECLARATION=4, INT_DECLARATION=5, ID=6, 
 		WHITESPACE=7, REAL=8, INT=9, ASSIGN=10;
 	public static final int
-		RULE_file = 0, RULE_stmt = 1, RULE_scan_stmt = 2, RULE_type_declaration = 3, 
+		RULE_file = 0, RULE_stmt = 1, RULE_scan_int_stmt = 2, RULE_scan_real_stmt = 3, 
 		RULE_print_stmt = 4, RULE_assign_stmt = 5, RULE_number = 6;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"file", "stmt", "scan_stmt", "type_declaration", "print_stmt", "assign_stmt", 
+			"file", "stmt", "scan_int_stmt", "scan_real_stmt", "print_stmt", "assign_stmt", 
 			"number"
 		};
 	}
@@ -39,7 +39,7 @@ public class ZaskroniecParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLATATION", "ID", 
+			null, null, "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLARATION", "ID", 
 			"WHITESPACE", "REAL", "INT", "ASSIGN"
 		};
 	}
@@ -171,8 +171,11 @@ public class ZaskroniecParser extends Parser {
 		public Print_stmtContext print_stmt() {
 			return getRuleContext(Print_stmtContext.class,0);
 		}
-		public Scan_stmtContext scan_stmt() {
-			return getRuleContext(Scan_stmtContext.class,0);
+		public Scan_int_stmtContext scan_int_stmt() {
+			return getRuleContext(Scan_int_stmtContext.class,0);
+		}
+		public Scan_real_stmtContext scan_real_stmt() {
+			return getRuleContext(Scan_real_stmtContext.class,0);
 		}
 		public Assign_stmtContext assign_stmt() {
 			return getRuleContext(Assign_stmtContext.class,0);
@@ -200,32 +203,37 @@ public class ZaskroniecParser extends Parser {
 		StmtContext _localctx = new StmtContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_stmt);
 		try {
-			setState(28);
+			setState(29);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case PRINT:
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(25);
 				print_stmt();
 				}
 				break;
-			case SCAN:
+			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(26);
-				scan_stmt();
+				scan_int_stmt();
 				}
 				break;
-			case ID:
+			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(27);
+				scan_real_stmt();
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(28);
 				assign_stmt();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -239,42 +247,40 @@ public class ZaskroniecParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Scan_stmtContext extends ParserRuleContext {
+	public static class Scan_int_stmtContext extends ParserRuleContext {
 		public TerminalNode SCAN() { return getToken(ZaskroniecParser.SCAN, 0); }
-		public Type_declarationContext type_declaration() {
-			return getRuleContext(Type_declarationContext.class,0);
-		}
+		public TerminalNode INT_DECLARATION() { return getToken(ZaskroniecParser.INT_DECLARATION, 0); }
 		public TerminalNode ID() { return getToken(ZaskroniecParser.ID, 0); }
-		public Scan_stmtContext(ParserRuleContext parent, int invokingState) {
+		public Scan_int_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_scan_stmt; }
+		@Override public int getRuleIndex() { return RULE_scan_int_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterScan_stmt(this);
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterScan_int_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitScan_stmt(this);
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitScan_int_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitScan_stmt(this);
+			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitScan_int_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Scan_stmtContext scan_stmt() throws RecognitionException {
-		Scan_stmtContext _localctx = new Scan_stmtContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_scan_stmt);
+	public final Scan_int_stmtContext scan_int_stmt() throws RecognitionException {
+		Scan_int_stmtContext _localctx = new Scan_int_stmtContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_scan_int_stmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
-			match(SCAN);
 			setState(31);
-			type_declaration();
+			match(SCAN);
 			setState(32);
+			match(INT_DECLARATION);
+			setState(33);
 			match(ID);
 			}
 		}
@@ -289,45 +295,41 @@ public class ZaskroniecParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Type_declarationContext extends ParserRuleContext {
+	public static class Scan_real_stmtContext extends ParserRuleContext {
+		public TerminalNode SCAN() { return getToken(ZaskroniecParser.SCAN, 0); }
 		public TerminalNode REAL_DECLARATION() { return getToken(ZaskroniecParser.REAL_DECLARATION, 0); }
-		public TerminalNode INT_DECLATATION() { return getToken(ZaskroniecParser.INT_DECLATATION, 0); }
-		public Type_declarationContext(ParserRuleContext parent, int invokingState) {
+		public TerminalNode ID() { return getToken(ZaskroniecParser.ID, 0); }
+		public Scan_real_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_type_declaration; }
+		@Override public int getRuleIndex() { return RULE_scan_real_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterType_declaration(this);
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterScan_real_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitType_declaration(this);
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitScan_real_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitType_declaration(this);
+			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitScan_real_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Type_declarationContext type_declaration() throws RecognitionException {
-		Type_declarationContext _localctx = new Type_declarationContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_type_declaration);
-		int _la;
+	public final Scan_real_stmtContext scan_real_stmt() throws RecognitionException {
+		Scan_real_stmtContext _localctx = new Scan_real_stmtContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_scan_real_stmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(34);
-			_la = _input.LA(1);
-			if ( !(_la==REAL_DECLARATION || _la==INT_DECLATATION) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			setState(35);
+			match(SCAN);
+			setState(36);
+			match(REAL_DECLARATION);
+			setState(37);
+			match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -369,9 +371,9 @@ public class ZaskroniecParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(36);
+			setState(39);
 			match(PRINT);
-			setState(37);
+			setState(40);
 			match(ID);
 			}
 		}
@@ -417,11 +419,11 @@ public class ZaskroniecParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(39);
+			setState(42);
 			match(ID);
-			setState(40);
+			setState(43);
 			match(ASSIGN);
-			setState(41);
+			setState(44);
 			number();
 			}
 		}
@@ -465,7 +467,7 @@ public class ZaskroniecParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
+			setState(46);
 			_la = _input.LA(1);
 			if ( !(_la==REAL || _la==INT) ) {
 			_errHandler.recoverInline(this);
@@ -489,18 +491,19 @@ public class ZaskroniecParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f\60\4\2\t\2\4\3"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f\63\4\2\t\2\4\3"+
 		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\5\2\22\n\2\3\2\7\2\25"+
-		"\n\2\f\2\16\2\30\13\2\3\2\3\2\3\3\3\3\3\3\5\3\37\n\3\3\4\3\4\3\4\3\4\3"+
-		"\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\2\2\t\2\4\6\b\n\f\16\2"+
-		"\4\3\2\6\7\3\2\n\13\2,\2\26\3\2\2\2\4\36\3\2\2\2\6 \3\2\2\2\b$\3\2\2\2"+
-		"\n&\3\2\2\2\f)\3\2\2\2\16-\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\21\22\3"+
-		"\2\2\2\22\23\3\2\2\2\23\25\7\3\2\2\24\21\3\2\2\2\25\30\3\2\2\2\26\24\3"+
-		"\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\2\2\3\32\3\3"+
-		"\2\2\2\33\37\5\n\6\2\34\37\5\6\4\2\35\37\5\f\7\2\36\33\3\2\2\2\36\34\3"+
-		"\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 !\7\4\2\2!\"\5\b\5\2\"#\7\b\2\2#\7\3"+
-		"\2\2\2$%\t\2\2\2%\t\3\2\2\2&\'\7\5\2\2\'(\7\b\2\2(\13\3\2\2\2)*\7\b\2"+
-		"\2*+\7\f\2\2+,\5\16\b\2,\r\3\2\2\2-.\t\3\2\2.\17\3\2\2\2\5\21\26\36";
+		"\n\2\f\2\16\2\30\13\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3 \n\3\3\4\3\4\3\4\3\4"+
+		"\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\2\2\t\2\4\6\b"+
+		"\n\f\16\2\3\3\2\n\13\2\60\2\26\3\2\2\2\4\37\3\2\2\2\6!\3\2\2\2\b%\3\2"+
+		"\2\2\n)\3\2\2\2\f,\3\2\2\2\16\60\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\21"+
+		"\22\3\2\2\2\22\23\3\2\2\2\23\25\7\3\2\2\24\21\3\2\2\2\25\30\3\2\2\2\26"+
+		"\24\3\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\2\2\3\32"+
+		"\3\3\2\2\2\33 \5\n\6\2\34 \5\6\4\2\35 \5\b\5\2\36 \5\f\7\2\37\33\3\2\2"+
+		"\2\37\34\3\2\2\2\37\35\3\2\2\2\37\36\3\2\2\2 \5\3\2\2\2!\"\7\4\2\2\"#"+
+		"\7\7\2\2#$\7\b\2\2$\7\3\2\2\2%&\7\4\2\2&\'\7\6\2\2\'(\7\b\2\2(\t\3\2\2"+
+		"\2)*\7\5\2\2*+\7\b\2\2+\13\3\2\2\2,-\7\b\2\2-.\7\f\2\2./\5\16\b\2/\r\3"+
+		"\2\2\2\60\61\t\2\2\2\61\17\3\2\2\2\5\21\26\37";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

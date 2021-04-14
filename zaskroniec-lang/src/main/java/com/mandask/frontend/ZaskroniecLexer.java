@@ -17,7 +17,7 @@ public class ZaskroniecLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, SCAN=2, PRINT=3, REAL_DECLARATION=4, INT_DECLATATION=5, ID=6, 
+		T__0=1, SCAN=2, PRINT=3, REAL_DECLARATION=4, INT_DECLARATION=5, ID=6, 
 		WHITESPACE=7, REAL=8, INT=9, ASSIGN=10;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -29,7 +29,7 @@ public class ZaskroniecLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"T__0", "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLATATION", "ID", 
+			"T__0", "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLARATION", "ID", 
 			"WHITESPACE", "REAL", "INT", "ASSIGN"
 		};
 	}
@@ -44,7 +44,7 @@ public class ZaskroniecLexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLATATION", "ID", 
+			null, null, "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLARATION", "ID", 
 			"WHITESPACE", "REAL", "INT", "ASSIGN"
 		};
 	}
