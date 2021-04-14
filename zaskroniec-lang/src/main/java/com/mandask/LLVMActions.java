@@ -3,6 +3,8 @@ package com.mandask;
 import com.mandask.frontend.ZaskroniecBaseListener;
 import com.mandask.frontend.ZaskroniecListener;
 import com.mandask.frontend.ZaskroniecParser;
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -126,6 +128,55 @@ public class LLVMActions extends ZaskroniecBaseListener {
         } else {
             stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
         }
+    }
+
+    @Override
+    public void enterExpression(ZaskroniecParser.ExpressionContext ctx) {
+
+    }
+
+    @Override
+    public void exitExpression(ZaskroniecParser.ExpressionContext ctx) {
+        if(ctx.getChildCount() > 1) {
+            Value v1 = stack.pop();
+            Value v2 = stack.pop();
+            if (v1.type == v2.type) {
+                String operator = ctx.getChild(1).getText();
+                switch(operator){
+                    case "+":
+                        if (v1.type == VarType.INT) {
+                            LLVMGenerator.add_i32(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                        } else {
+                            LLVMGenerator.add_double(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                        }
+                        break;
+                    case "*":
+                        if (v1.type == VarType.INT) {
+                            LLVMGenerator.mult_i32(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                        } else {
+                            LLVMGenerator.mult_double(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                        }
+                        break;
+                }
+
+            } else {
+                error(ctx.getStart().getLine(), ctx.getChild(1).getText() + "type mismatch");
+            }
+        }
+    }
+
+    @Override
+    public void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx) {
+
+    }
+
+    @Override
+    public void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx) {
+
     }
 
     private void error(int line, String msg) {

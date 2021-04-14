@@ -60,4 +60,24 @@ public class LLVMGenerator {
     public static void assign_double(String id, String value) {
         main_text += "store double "+value+", double* %"+id+"\n";
     }
+
+    public static void add_i32(String val1, String val2){
+        main_text += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void add_double(String val1, String val2){
+        main_text += "%"+reg+" = fadd double "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void mult_i32(String val1, String val2){
+        main_text += "%"+reg+" = mul i32 "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void mult_double(String val1, String val2){
+        main_text += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
+        reg++;
+    }
 }

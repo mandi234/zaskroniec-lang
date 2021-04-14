@@ -24,7 +24,7 @@ public class Main {
         ZaskroniecParser parser = new ZaskroniecParser(tokens);
 
         ParseTree tree = parser.file();
-        System.out.println(tree.toStringTree(parser));
+        //System.out.println(tree.toStringTree(parser));
 
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new LLVMActions(),tree);
