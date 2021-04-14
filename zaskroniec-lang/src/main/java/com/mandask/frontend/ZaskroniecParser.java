@@ -17,26 +17,30 @@ public class ZaskroniecParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, PRINT=2, ID=3, WHITESPACE=4, REAL=5, INT=6, ASSIGN=7;
+		T__0=1, SCAN=2, PRINT=3, REAL_DECLARATION=4, INT_DECLARATION=5, ID=6, 
+		WHITESPACE=7, REAL=8, INT=9, ASSIGN=10;
 	public static final int
-		RULE_file = 0, RULE_stmt = 1, RULE_print_stmt = 2, RULE_assign_stmt = 3, 
-		RULE_number = 4;
+		RULE_file = 0, RULE_stmt = 1, RULE_scan_int_stmt = 2, RULE_scan_real_stmt = 3, 
+		RULE_print_stmt = 4, RULE_assign_stmt = 5, RULE_number = 6;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"file", "stmt", "print_stmt", "assign_stmt", "number"
+			"file", "stmt", "scan_int_stmt", "scan_real_stmt", "print_stmt", "assign_stmt", 
+			"number"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "';'", "'wypisssz'", null, null, null, null, "'='"
+			null, "';'", "'ssskanuj'", "'wypisssz'", "'dabl'", "'int'", null, null, 
+			null, null, "'='"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "PRINT", "ID", "WHITESPACE", "REAL", "INT", "ASSIGN"
+			null, null, "SCAN", "PRINT", "REAL_DECLARATION", "INT_DECLARATION", "ID", 
+			"WHITESPACE", "REAL", "INT", "ASSIGN"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -124,31 +128,31 @@ public class ZaskroniecParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(16);
+			setState(20);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << PRINT) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << SCAN) | (1L << PRINT) | (1L << ID))) != 0)) {
 				{
 				{
-				setState(11);
+				setState(15);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==PRINT || _la==ID) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SCAN) | (1L << PRINT) | (1L << ID))) != 0)) {
 					{
-					setState(10);
+					setState(14);
 					stmt();
 					}
 				}
 
-				setState(13);
+				setState(17);
 				match(T__0);
 				}
 				}
-				setState(18);
+				setState(22);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(19);
+			setState(23);
 			match(EOF);
 			}
 		}
@@ -166,6 +170,12 @@ public class ZaskroniecParser extends Parser {
 	public static class StmtContext extends ParserRuleContext {
 		public Print_stmtContext print_stmt() {
 			return getRuleContext(Print_stmtContext.class,0);
+		}
+		public Scan_int_stmtContext scan_int_stmt() {
+			return getRuleContext(Scan_int_stmtContext.class,0);
+		}
+		public Scan_real_stmtContext scan_real_stmt() {
+			return getRuleContext(Scan_real_stmtContext.class,0);
 		}
 		public Assign_stmtContext assign_stmt() {
 			return getRuleContext(Assign_stmtContext.class,0);
@@ -193,25 +203,133 @@ public class ZaskroniecParser extends Parser {
 		StmtContext _localctx = new StmtContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_stmt);
 		try {
-			setState(23);
+			setState(29);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case PRINT:
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(21);
+				setState(25);
 				print_stmt();
 				}
 				break;
-			case ID:
+			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(22);
+				setState(26);
+				scan_int_stmt();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(27);
+				scan_real_stmt();
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(28);
 				assign_stmt();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Scan_int_stmtContext extends ParserRuleContext {
+		public TerminalNode SCAN() { return getToken(ZaskroniecParser.SCAN, 0); }
+		public TerminalNode INT_DECLARATION() { return getToken(ZaskroniecParser.INT_DECLARATION, 0); }
+		public TerminalNode ID() { return getToken(ZaskroniecParser.ID, 0); }
+		public Scan_int_stmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_scan_int_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterScan_int_stmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitScan_int_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitScan_int_stmt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Scan_int_stmtContext scan_int_stmt() throws RecognitionException {
+		Scan_int_stmtContext _localctx = new Scan_int_stmtContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_scan_int_stmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(31);
+			match(SCAN);
+			setState(32);
+			match(INT_DECLARATION);
+			setState(33);
+			match(ID);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Scan_real_stmtContext extends ParserRuleContext {
+		public TerminalNode SCAN() { return getToken(ZaskroniecParser.SCAN, 0); }
+		public TerminalNode REAL_DECLARATION() { return getToken(ZaskroniecParser.REAL_DECLARATION, 0); }
+		public TerminalNode ID() { return getToken(ZaskroniecParser.ID, 0); }
+		public Scan_real_stmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_scan_real_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).enterScan_real_stmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ZaskroniecListener ) ((ZaskroniecListener)listener).exitScan_real_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ZaskroniecVisitor ) return ((ZaskroniecVisitor<? extends T>)visitor).visitScan_real_stmt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Scan_real_stmtContext scan_real_stmt() throws RecognitionException {
+		Scan_real_stmtContext _localctx = new Scan_real_stmtContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_scan_real_stmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(35);
+			match(SCAN);
+			setState(36);
+			match(REAL_DECLARATION);
+			setState(37);
+			match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -249,13 +367,13 @@ public class ZaskroniecParser extends Parser {
 
 	public final Print_stmtContext print_stmt() throws RecognitionException {
 		Print_stmtContext _localctx = new Print_stmtContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_print_stmt);
+		enterRule(_localctx, 8, RULE_print_stmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(25);
+			setState(39);
 			match(PRINT);
-			setState(26);
+			setState(40);
 			match(ID);
 			}
 		}
@@ -297,15 +415,15 @@ public class ZaskroniecParser extends Parser {
 
 	public final Assign_stmtContext assign_stmt() throws RecognitionException {
 		Assign_stmtContext _localctx = new Assign_stmtContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_assign_stmt);
+		enterRule(_localctx, 10, RULE_assign_stmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(28);
+			setState(42);
 			match(ID);
-			setState(29);
+			setState(43);
 			match(ASSIGN);
-			setState(30);
+			setState(44);
 			number();
 			}
 		}
@@ -344,12 +462,12 @@ public class ZaskroniecParser extends Parser {
 
 	public final NumberContext number() throws RecognitionException {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_number);
+		enterRule(_localctx, 12, RULE_number);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(32);
+			setState(46);
 			_la = _input.LA(1);
 			if ( !(_la==REAL || _la==INT) ) {
 			_errHandler.recoverInline(this);
@@ -373,16 +491,19 @@ public class ZaskroniecParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\t%\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\5\2\16\n\2\3\2\7\2\21\n\2\f\2\16\2\24\13"+
-		"\2\3\2\3\2\3\3\3\3\5\3\32\n\3\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6"+
-		"\2\2\7\2\4\6\b\n\2\3\3\2\7\b\2\"\2\22\3\2\2\2\4\31\3\2\2\2\6\33\3\2\2"+
-		"\2\b\36\3\2\2\2\n\"\3\2\2\2\f\16\5\4\3\2\r\f\3\2\2\2\r\16\3\2\2\2\16\17"+
-		"\3\2\2\2\17\21\7\3\2\2\20\r\3\2\2\2\21\24\3\2\2\2\22\20\3\2\2\2\22\23"+
-		"\3\2\2\2\23\25\3\2\2\2\24\22\3\2\2\2\25\26\7\2\2\3\26\3\3\2\2\2\27\32"+
-		"\5\6\4\2\30\32\5\b\5\2\31\27\3\2\2\2\31\30\3\2\2\2\32\5\3\2\2\2\33\34"+
-		"\7\4\2\2\34\35\7\5\2\2\35\7\3\2\2\2\36\37\7\5\2\2\37 \7\t\2\2 !\5\n\6"+
-		"\2!\t\3\2\2\2\"#\t\2\2\2#\13\3\2\2\2\5\r\22\31";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f\63\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\5\2\22\n\2\3\2\7\2\25"+
+		"\n\2\f\2\16\2\30\13\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3 \n\3\3\4\3\4\3\4\3\4"+
+		"\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\2\2\t\2\4\6\b"+
+		"\n\f\16\2\3\3\2\n\13\2\60\2\26\3\2\2\2\4\37\3\2\2\2\6!\3\2\2\2\b%\3\2"+
+		"\2\2\n)\3\2\2\2\f,\3\2\2\2\16\60\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\21"+
+		"\22\3\2\2\2\22\23\3\2\2\2\23\25\7\3\2\2\24\21\3\2\2\2\25\30\3\2\2\2\26"+
+		"\24\3\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\2\2\3\32"+
+		"\3\3\2\2\2\33 \5\n\6\2\34 \5\6\4\2\35 \5\b\5\2\36 \5\f\7\2\37\33\3\2\2"+
+		"\2\37\34\3\2\2\2\37\35\3\2\2\2\37\36\3\2\2\2 \5\3\2\2\2!\"\7\4\2\2\"#"+
+		"\7\7\2\2#$\7\b\2\2$\7\3\2\2\2%&\7\4\2\2&\'\7\6\2\2\'(\7\b\2\2(\t\3\2\2"+
+		"\2)*\7\5\2\2*+\7\b\2\2+\13\3\2\2\2,-\7\b\2\2-.\7\f\2\2./\5\16\b\2/\r\3"+
+		"\2\2\2\60\61\t\2\2\2\61\17\3\2\2\2\5\21\26\37";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
