@@ -69,7 +69,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
         String ID = ctx.ID().getText();
         if(!variables.containsKey(ID))
             LLVMGenerator.declare_double(ID);
-        variables.put(ID, VarType.INT );
+        variables.put(ID, VarType.REAL );
         LLVMGenerator.scanf_double(ID);
     }
 

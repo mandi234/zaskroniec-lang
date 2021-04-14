@@ -1,8 +1,4 @@
 test = 2;
-pupa = 999;
-wypisssz pupa;
-ssskanuj test;
-ssskanuj puratos;
+ssskanuj dabl test2;
 wypisssz test;
-wypisssz pupa;
-wypisssz puratos;
+wypisssz test2;
