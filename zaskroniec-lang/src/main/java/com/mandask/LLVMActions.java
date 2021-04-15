@@ -161,6 +161,32 @@ public class LLVMActions extends ZaskroniecBaseListener {
                             stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
                         }
                         break;
+                    case "/":
+                        if (v1.type == VarType.INT) {
+                            LLVMGenerator.div_i32(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                        } else {
+                            LLVMGenerator.div_double(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                        }
+                        break;
+                    case "-":
+                        if (v1.type == VarType.INT) {
+                            LLVMGenerator.sub_i32(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                        } else {
+                            LLVMGenerator.sub_double(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                        }
+                        break;
+                    case "%":
+                        if (v1.type == VarType.INT) {
+                            LLVMGenerator.mod_i32(v1.name, v2.name);
+                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                        } else {
+                            error(ctx.getStart().getLine(), "wrong type on modulo operation, int expected");
+                        }
+                        break;
                 }
 
             } else {

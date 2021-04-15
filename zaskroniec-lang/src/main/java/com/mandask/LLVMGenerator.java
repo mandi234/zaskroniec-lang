@@ -80,4 +80,30 @@ public class LLVMGenerator {
         main_text += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
         reg++;
     }
+
+    public static void div_i32(String val1, String val2) {
+        main_text += "%"+reg+" = sdiv i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void div_double(String val1, String val2) {
+        main_text += "%"+reg+" = fdiv double "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void sub_double(String val1, String val2) {
+        main_text += "%"+reg+" = fsub double "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void sub_i32(String val1, String val2) {
+        main_text += "%"+reg+" = sub i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void mod_i32(String val1, String val2) {
+        main_text += "%"+reg+" = srem i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
 }
