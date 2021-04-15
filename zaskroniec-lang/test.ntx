@@ -1,4 +1,2 @@
-test = 2;
-ssskanuj dabl test2;
+test = 3 + 2 * 2;
 wypisssz test;
-wypisssz test2;

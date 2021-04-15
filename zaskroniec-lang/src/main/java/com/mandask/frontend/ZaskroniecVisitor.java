@@ -52,4 +52,16 @@ public interface ZaskroniecVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumber(ZaskroniecParser.NumberContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(ZaskroniecParser.ExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#paraphrase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParaphrase(ZaskroniecParser.ParaphraseContext ctx);
 }

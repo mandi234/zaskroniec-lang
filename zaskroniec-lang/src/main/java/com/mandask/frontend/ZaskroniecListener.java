@@ -77,4 +77,24 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumber(ZaskroniecParser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression(ZaskroniecParser.ExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression(ZaskroniecParser.ExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#paraphrase}.
+	 * @param ctx the parse tree
+	 */
+	void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#paraphrase}.
+	 * @param ctx the parse tree
+	 */
+	void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx);
 }

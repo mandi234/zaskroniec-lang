@@ -5,16 +5,24 @@ public class LLVMGenerator {
     static String main_text = "";
     static int reg = 1;
 
-    static void printf_i32(String id){
+    static void load_i32(String id) {
         main_text += "%"+reg+" = load i32, i32* %"+id+"\n";
         reg++;
+    }
+
+    static void load_double(String id) {
+        main_text += "%"+reg+" = load double, double* %"+id+"\n";
+        reg++;
+    }
+
+    static void printf_i32(String id){
+        load_i32(id);
         main_text += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strpi, i32 0, i32 0), i32 %"+(reg-1)+")\n";
         reg++;
     }
 
     static void printf_double(String id){
-        main_text += "%"+reg+" = load double, double* %"+id+"\n";
-        reg++;
+        load_double(id);
         main_text += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @strpd, i32 0, i32 0), double %"+(reg-1)+")\n";
         reg++;
     }
@@ -60,4 +68,50 @@ public class LLVMGenerator {
     public static void assign_double(String id, String value) {
         main_text += "store double "+value+", double* %"+id+"\n";
     }
+
+    public static void add_i32(String val1, String val2){
+        main_text += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void add_double(String val1, String val2){
+        main_text += "%"+reg+" = fadd double "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void mult_i32(String val1, String val2){
+        main_text += "%"+reg+" = mul i32 "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void mult_double(String val1, String val2){
+        main_text += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
+        reg++;
+    }
+
+    public static void div_i32(String val1, String val2) {
+        main_text += "%"+reg+" = sdiv i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void div_double(String val1, String val2) {
+        main_text += "%"+reg+" = fdiv double "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void sub_double(String val1, String val2) {
+        main_text += "%"+reg+" = fsub double "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void sub_i32(String val1, String val2) {
+        main_text += "%"+reg+" = sub i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
+    public static void mod_i32(String val1, String val2) {
+        main_text += "%"+reg+" = srem i32 "+val2+", "+val1+"\n";
+        reg++;
+    }
+
 }

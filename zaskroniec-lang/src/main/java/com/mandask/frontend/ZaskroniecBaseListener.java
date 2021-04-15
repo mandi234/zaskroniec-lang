@@ -95,6 +95,30 @@ public class ZaskroniecBaseListener implements ZaskroniecListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumber(ZaskroniecParser.NumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpression(ZaskroniecParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpression(ZaskroniecParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParaphrase(ZaskroniecParser.ParaphraseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
