@@ -137,7 +137,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitExpression(ZaskroniecParser.ExpressionContext ctx) {
-        if(ctx.getChildCount() > 1) {
+        if(ctx.getChildCount() > 1 && stack.size()>=2) {
             Value v1 = stack.pop();
             Value v2 = stack.pop();
             if (v1.type == v2.type) {
@@ -191,6 +191,22 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
             } else {
                 error(ctx.getStart().getLine(), ctx.getChild(1).getText() + "type mismatch");
+            }
+        }
+        if (ctx.ID() != null) {
+            String ID = ctx.ID().getText();
+            VarType type = variables.get(ID);
+            if (type != null) {
+                if (type == VarType.INT) {
+                    LLVMGenerator.load_i32(ID);
+                    stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                }
+                if (type == VarType.REAL) {
+                    LLVMGenerator.load_double(ID);
+                    stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                }
+            } else {
+                error(ctx.getStart().getLine(), "unknown variable " + ID);
             }
         }
     }
