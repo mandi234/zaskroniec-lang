@@ -6,7 +6,8 @@ stmt: print_stmt ';'
     | scan_int_stmt ';'
     | scan_real_stmt ';'
     | assign_stmt ';'
-    | if_stmt;
+    | if_stmt
+    | while_stmt;
 
 if_stmt: 'jesssli' '(' boolean_exp ')' stmt* 'ssskonczjesssli';
 
@@ -16,6 +17,8 @@ boolean_exp
         | greater_exp
         | leq_exp
         | geq_exp;
+
+while_stmt: 'podczasss' '(' boolean_exp ')' stmt* 'ssskonczpodczasss';
 
 geq_exp: value_exp '>=' value_exp;
 
