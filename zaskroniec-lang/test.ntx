@@ -1,2 +1,6 @@
-test = 3 + 2 * 2;
-wypisssz test;
+kloc = 2;
+jesssli (kloc == 3)
+    kloc = 4;
+    wypisssz kloc;
+ssskonczjesssli
+wypisssz kloc;

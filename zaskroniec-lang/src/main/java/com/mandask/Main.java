@@ -28,8 +28,8 @@ public class Main {
 
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new LLVMActions(),tree);
+        System.out.println("################");
         String outString = LLVMGenerator.generate();
-
         try (PrintWriter outFile = new PrintWriter("test.ll")) {
             outFile.println(outString);
         }
