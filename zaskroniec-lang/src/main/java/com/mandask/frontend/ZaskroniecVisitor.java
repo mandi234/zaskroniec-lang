@@ -23,6 +23,54 @@ public interface ZaskroniecVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#if_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_stmt(ZaskroniecParser.If_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#boolean_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#geq_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGeq_exp(ZaskroniecParser.Geq_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#leq_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeq_exp(ZaskroniecParser.Leq_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#greater_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreater_exp(ZaskroniecParser.Greater_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#less_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLess_exp(ZaskroniecParser.Less_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#equals_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEquals_exp(ZaskroniecParser.Equals_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#value_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValue_exp(ZaskroniecParser.Value_expContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ZaskroniecParser#scan_int_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -28,6 +28,86 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#if_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_stmt(ZaskroniecParser.If_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#if_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_stmt(ZaskroniecParser.If_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#boolean_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean_exp(ZaskroniecParser.Boolean_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#boolean_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#geq_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterGeq_exp(ZaskroniecParser.Geq_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#geq_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitGeq_exp(ZaskroniecParser.Geq_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#leq_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeq_exp(ZaskroniecParser.Leq_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#leq_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeq_exp(ZaskroniecParser.Leq_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#greater_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreater_exp(ZaskroniecParser.Greater_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#greater_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreater_exp(ZaskroniecParser.Greater_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#less_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLess_exp(ZaskroniecParser.Less_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#less_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLess_exp(ZaskroniecParser.Less_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#equals_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterEquals_exp(ZaskroniecParser.Equals_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#equals_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitEquals_exp(ZaskroniecParser.Equals_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#value_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue_exp(ZaskroniecParser.Value_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#value_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue_exp(ZaskroniecParser.Value_expContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ZaskroniecParser#scan_int_stmt}.
 	 * @param ctx the parse tree
 	 */
