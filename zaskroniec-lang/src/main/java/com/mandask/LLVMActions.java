@@ -6,7 +6,9 @@ import com.mandask.frontend.ZaskroniecParser;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 
@@ -21,7 +23,7 @@ class Value{
     }
 }
 
-public class LLVMActions extends ZaskroniecBaseListener {
+public class LLVMActions extends ZaskroniecBaseListener{
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
@@ -45,6 +47,111 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitStmt(ZaskroniecParser.StmtContext ctx) {
 
+    }
+
+    @Override
+    public void enterIf_stmt(ZaskroniecParser.If_stmtContext ctx) {
+    }
+
+    @Override
+    public void exitIf_stmt(ZaskroniecParser.If_stmtContext ctx) {
+        LLVMGenerator.ifEnd();
+    }
+
+    @Override
+    public void enterBoolean_exp(ZaskroniecParser.Boolean_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx) {
+        Map<String, String> operatorMap = new HashMap<String, String>() {{
+            put(">", "sgt");
+            put("<", "slt");
+            put("==", "eq");
+            put(">=", "sge");
+            put("<=", "sle");
+        }};
+
+        String leftExp = ctx.getChild(0).getChild(0).getText();
+        String operator = ctx.getChild(0).getChild(1).getText();
+        String rightExp = ctx.getChild(0).getChild(2).getText();
+
+
+        if (variables.containsKey(leftExp)) {
+            LLVMGenerator.icmp(leftExp, rightExp, operatorMap.get(operator));
+        } else {
+            ctx.getStart().getLine();
+            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+leftExp);
+        }
+    }
+
+    @Override
+    public void enterWhile_stmt(ZaskroniecParser.While_stmtContext ctx) {
+        LLVMGenerator.whileStart();
+    }
+
+    @Override
+    public void exitWhile_stmt(ZaskroniecParser.While_stmtContext ctx) {
+        LLVMGenerator.whileEnd();
+    }
+
+    @Override
+    public void enterGeq_exp(ZaskroniecParser.Geq_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitGeq_exp(ZaskroniecParser.Geq_expContext ctx) {
+
+    }
+
+    @Override
+    public void enterLeq_exp(ZaskroniecParser.Leq_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitLeq_exp(ZaskroniecParser.Leq_expContext ctx) {
+
+    }
+
+    @Override
+    public void enterGreater_exp(ZaskroniecParser.Greater_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitGreater_exp(ZaskroniecParser.Greater_expContext ctx) {
+
+    }
+
+    @Override
+    public void enterLess_exp(ZaskroniecParser.Less_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitLess_exp(ZaskroniecParser.Less_expContext ctx) {
+
+    }
+
+    @Override
+    public void enterEquals_exp(ZaskroniecParser.Equals_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitEquals_exp(ZaskroniecParser.Equals_expContext ctx) {
+    }
+
+    @Override
+    public void enterValue_exp(ZaskroniecParser.Value_expContext ctx) {
+
+    }
+
+    @Override
+    public void exitValue_exp(ZaskroniecParser.Value_expContext ctx) {
     }
 
     @Override
@@ -105,14 +212,27 @@ public class LLVMActions extends ZaskroniecBaseListener {
     public void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) {
         String ID = ctx.ID().getText();
         Value v = stack.pop();
-        variables.put(ID, v.type);
-        if( v.type == VarType.INT ){
-            LLVMGenerator.declare_i32(ID);
-            LLVMGenerator.assign_i32(ID, v.name);
-        }
-        if( v.type == VarType.REAL ){
-            LLVMGenerator.declare_double(ID);
-            LLVMGenerator.assign_double(ID, v.name);
+        if (! variables.containsKey(ID)) {
+            variables.put(ID, v.type);
+            if( v.type == VarType.INT ){
+                LLVMGenerator.declare_i32(ID);
+                LLVMGenerator.assign_i32(ID, v.name);
+            }
+            if( v.type == VarType.REAL ){
+                LLVMGenerator.declare_double(ID);
+                LLVMGenerator.assign_double(ID, v.name);
+            }
+        } else {
+            if (v.type == variables.get(ID)) {
+                if(v.type == VarType.INT) {
+                    LLVMGenerator.assign_i32(ID, v.name);
+                }
+                if(v.type == VarType.REAL) {
+                    LLVMGenerator.assign_double(ID, v.name);
+                }
+            } else {
+                error(ctx.getStart().getLine(), ctx.getChild(2).getText() + " type mismatch");
+            }
         }
     }
 

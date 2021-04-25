@@ -1,9 +1,16 @@
 package com.mandask;
 
+import java.util.Stack;
+
 public class LLVMGenerator {
     static String header_text = "";
     static String main_text = "";
     static int reg = 1;
+    static int br = 0;
+    static int whileReg = 0;
+
+    static Stack<Integer> brStack = new Stack<>();
+    static Stack<Integer> whlieRegStack = new Stack<>();
 
     static void load_i32(String id) {
         main_text += "%"+reg+" = load i32, i32* %"+id+"\n";
@@ -114,4 +121,36 @@ public class LLVMGenerator {
         reg++;
     }
 
+
+
+    public static void ifEnd() {
+        int b = brStack.pop();
+        main_text += "br label %false"+b+"\n";
+        main_text += "false"+b+":\n";
+    }
+
+    public static void icmp(String leftExp, String rightExp, String operator) {
+        main_text += "%"+reg+" = load i32, i32* %"+leftExp+"\n";
+        reg++;
+        main_text += "%"+reg+" = icmp "+operator+" i32 %"+(reg-1)+", "+rightExp+"\n";
+        reg++;
+        br++;
+        main_text += "br i1 %"+(reg-1)+", label %true"+br+", label %false"+br+"\n";
+        main_text += "true"+br+":\n";
+        brStack.push(br);
+    }
+
+    public static void whileStart() {
+        whileReg++;
+        main_text += "br label %while"+whileReg+"\n";
+        main_text += "while"+whileReg+":\n";
+        whlieRegStack.push(whileReg);
+    }
+
+    public static void whileEnd() {
+        int r = whlieRegStack.pop();
+        main_text += "br label %while"+r+"\n";
+        int b = brStack.pop();
+        main_text += "false"+b+":\n";
+    }
 }

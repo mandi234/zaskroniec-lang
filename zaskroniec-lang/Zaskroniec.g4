@@ -1,11 +1,36 @@
 grammar Zaskroniec;
 
-file: (stmt? ';')* EOF;
+file: stmt* EOF;
 
-stmt: print_stmt
-    | scan_int_stmt
-    | scan_real_stmt
-    | assign_stmt;
+stmt: print_stmt ';'
+    | scan_int_stmt ';'
+    | scan_real_stmt ';'
+    | assign_stmt ';'
+    | if_stmt
+    | while_stmt;
+
+if_stmt: 'jesssli' '(' boolean_exp ')' stmt* 'ssskonczjesssli';
+
+boolean_exp
+        : equals_exp
+        | less_exp
+        | greater_exp
+        | leq_exp
+        | geq_exp;
+
+while_stmt: 'podczasss' '(' boolean_exp ')' stmt* 'ssskonczpodczasss';
+
+geq_exp: value_exp '>=' value_exp;
+
+leq_exp: value_exp '<=' value_exp;
+
+greater_exp: value_exp '>' value_exp;
+
+less_exp: value_exp '<' value_exp;
+
+equals_exp: value_exp '==' value_exp;
+
+value_exp: ID | number;
 
 scan_int_stmt: SCAN INT_DECLARATION ID;
 
@@ -41,7 +66,6 @@ INT_DECLARATION : 'int';
 
 ID: [a-zA-Z_][a-zA-Z_0-9]+;
 
-WHITESPACE: [ \t\n\r]* -> skip;
 
 REAL: [-+]?'0'..'9'+'.''0'..'9'+
     ;
@@ -57,3 +81,4 @@ MULTIPLY:   '*';
 DIVIDE:     '/';
 MODULO:     '%';
 
+WHITESPACE: [ \t\n\r]+ -> skip;
