@@ -127,10 +127,10 @@ public class LLVMGenerator {
         main_text += "false"+b+":\n";
     }
 
-    public static void icmp(String leftExp, String rightExp) {
+    public static void icmp(String leftExp, String rightExp, String operator) {
         main_text += "%"+reg+" = load i32, i32* %"+leftExp+"\n";
         reg++;
-        main_text += "%"+reg+" = icmp eq i32 %"+(reg-1)+", "+rightExp+"\n";
+        main_text += "%"+reg+" = icmp "+operator+" i32 %"+(reg-1)+", "+rightExp+"\n";
         reg++;
         br++;
         main_text += "br i1 %"+(reg-1)+", label %true"+br+", label %false"+br+"\n";

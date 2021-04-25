@@ -6,7 +6,9 @@ import com.mandask.frontend.ZaskroniecParser;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 
@@ -63,7 +65,25 @@ public class LLVMActions extends ZaskroniecBaseListener{
 
     @Override
     public void exitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx) {
+        Map<String, String> operatorMap = new HashMap<String, String>() {{
+            put(">", "sgt");
+            put("<", "slt");
+            put("==", "eq");
+            put(">=", "sge");
+            put("<=", "sle");
+        }};
 
+        String leftExp = ctx.getChild(0).getChild(0).getText();
+        String operator = ctx.getChild(0).getChild(1).getText();
+        String rightExp = ctx.getChild(0).getChild(2).getText();
+
+
+        if (variables.containsKey(leftExp)) {
+            LLVMGenerator.icmp(leftExp, rightExp, operatorMap.get(operator));
+        } else {
+            ctx.getStart().getLine();
+            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+leftExp);
+        }
     }
 
     @Override
@@ -113,14 +133,6 @@ public class LLVMActions extends ZaskroniecBaseListener{
 
     @Override
     public void exitEquals_exp(ZaskroniecParser.Equals_expContext ctx) {
-        String leftExp = ctx.getChild(0).getText();
-        String rightExp = ctx.getChild(2).getText();
-        if (variables.containsKey(leftExp)) {
-            LLVMGenerator.icmp(leftExp, rightExp);
-        } else {
-            ctx.getStart().getLine();
-            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+leftExp);
-        }
     }
 
     @Override
