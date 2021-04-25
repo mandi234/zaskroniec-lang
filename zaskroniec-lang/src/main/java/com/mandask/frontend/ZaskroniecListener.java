@@ -48,6 +48,16 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#while_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_stmt(ZaskroniecParser.While_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#while_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_stmt(ZaskroniecParser.While_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ZaskroniecParser#geq_exp}.
 	 * @param ctx the parse tree
 	 */

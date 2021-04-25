@@ -7,8 +7,10 @@ public class LLVMGenerator {
     static String main_text = "";
     static int reg = 1;
     static int br = 0;
+    static int whileReg = 0;
 
     static Stack<Integer> brStack = new Stack<>();
+    static Stack<Integer> whlieRegStack = new Stack<>();
 
     static void load_i32(String id) {
         main_text += "%"+reg+" = load i32, i32* %"+id+"\n";
@@ -136,5 +138,19 @@ public class LLVMGenerator {
         main_text += "br i1 %"+(reg-1)+", label %true"+br+", label %false"+br+"\n";
         main_text += "true"+br+":\n";
         brStack.push(br);
+    }
+
+    public static void whileStart() {
+        whileReg++;
+        main_text += "br label %while"+whileReg+"\n";
+        main_text += "while"+whileReg+":\n";
+        whlieRegStack.push(whileReg);
+    }
+
+    public static void whileEnd() {
+        int r = whlieRegStack.pop();
+        main_text += "br label %while"+r+"\n";
+        int b = brStack.pop();
+        main_text += "false"+b+":\n";
     }
 }

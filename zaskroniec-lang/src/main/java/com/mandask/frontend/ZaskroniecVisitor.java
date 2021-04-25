@@ -35,6 +35,12 @@ public interface ZaskroniecVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolean_exp(ZaskroniecParser.Boolean_expContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ZaskroniecParser#while_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_stmt(ZaskroniecParser.While_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ZaskroniecParser#geq_exp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

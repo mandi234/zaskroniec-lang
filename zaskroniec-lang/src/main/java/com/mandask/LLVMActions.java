@@ -87,6 +87,16 @@ public class LLVMActions extends ZaskroniecBaseListener{
     }
 
     @Override
+    public void enterWhile_stmt(ZaskroniecParser.While_stmtContext ctx) {
+        LLVMGenerator.whileStart();
+    }
+
+    @Override
+    public void exitWhile_stmt(ZaskroniecParser.While_stmtContext ctx) {
+        LLVMGenerator.whileEnd();
+    }
+
+    @Override
     public void enterGeq_exp(ZaskroniecParser.Geq_expContext ctx) {
 
     }
