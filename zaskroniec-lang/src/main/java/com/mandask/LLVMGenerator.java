@@ -9,9 +9,11 @@ public class LLVMGenerator {
     static int reg = 1;
     static int br = 0;
     static int whileReg = 0;
+    static int mainReg = 1;
 
     static Stack<Integer> brStack = new Stack<>();
     static Stack<Integer> whlieRegStack = new Stack<>();
+
 
     static void load_i32(String id) {
         buffer += "%"+reg+" = load i32, i32* %"+id+"\n";
@@ -157,5 +159,20 @@ public class LLVMGenerator {
 
     public static void closeMain() {
         main_text += buffer;
+    }
+
+    public static void functionStart(String id) {
+        main_text += buffer;
+        mainReg = reg;
+        buffer = "define i32 @"+id+"() nounwind {\n";
+        reg = 1;
+    }
+
+    public static void functionEnd() {
+        buffer += "ret i32 %"+(reg-1)+"\n";
+        buffer += "}\n";
+        header_text += buffer;
+        buffer = "";
+        reg = mainReg;
     }
 }

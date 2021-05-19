@@ -1,12 +1,7 @@
-kloc = 0;
-test = 1000;
-podczasss (kloc < 5)
-      wypisssz kloc;
-      jesssli ( kloc == 3 )
-        wypisssz test;
-      ssskonczjesssli
-      kloc = kloc + 1;
-ssskonczpodczasss
-bb = 999;
-wypisssz bb;
-wypisssz kloc;
+z = 5;
+funkcssja fun {
+    z = 3;
+    zzzwroc  z;
+}
+
+wypisssz z;

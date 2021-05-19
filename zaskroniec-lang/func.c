@@ -1,17 +1,20 @@
-#include<stdio.h>
+    #include<stdio.h>
 
-int z=4;
+    int z=4;
+    int x = 4;
 
-int func(){
-  int y,z;
-  z = 2;
-  return z;
-}
+    int func(){
+      z = 2;
+      return z;
+    }
 
-int main(){
-  int a;
-  z = 3;
-  z=func();
-  printf("%d\n",z);
-}
+    int main(){
+      x = 5;
+
+      printf("%d\n",z);
+      z=func();
+      printf("%d\n",z);
+
+      int j = 5;
+    }
 

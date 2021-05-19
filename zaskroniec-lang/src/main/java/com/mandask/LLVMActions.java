@@ -27,7 +27,8 @@ public class LLVMActions extends ZaskroniecBaseListener {
     Set<String> globalNames = new HashSet<>();
     Set<String> functions = new HashSet<>();
     Set<String> localNames = new HashSet<>();
-    String value, function;
+
+    String function = "";
     Boolean global;
 
 
@@ -69,7 +70,10 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitFparam(ZaskroniecParser.FparamContext ctx) {
-
+        String ID = ctx.ID().getText();
+        functions.add(ID);
+        function = ID;
+        LLVMGenerator.functionStart(ID);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitFblock(ZaskroniecParser.FblockContext ctx) {
-
+        LLVMGenerator.functionEnd();
     }
 
     @Override
