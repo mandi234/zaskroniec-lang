@@ -38,6 +38,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitFile(ZaskroniecParser.FileContext ctx) {
+        LLVMGenerator.closeMain();
         System.out.println(LLVMGenerator.generate());
     }
 

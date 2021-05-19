@@ -14,34 +14,34 @@ public class LLVMGenerator {
     static Stack<Integer> whlieRegStack = new Stack<>();
 
     static void load_i32(String id) {
-        main_text += "%"+reg+" = load i32, i32* %"+id+"\n";
+        buffer += "%"+reg+" = load i32, i32* %"+id+"\n";
         reg++;
     }
 
     static void load_double(String id) {
-        main_text += "%"+reg+" = load double, double* %"+id+"\n";
+        buffer += "%"+reg+" = load double, double* %"+id+"\n";
         reg++;
     }
 
     static void printf_i32(String id){
         load_i32(id);
-        main_text += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strpi, i32 0, i32 0), i32 %"+(reg-1)+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strpi, i32 0, i32 0), i32 %"+(reg-1)+")\n";
         reg++;
     }
 
     static void printf_double(String id){
         load_double(id);
-        main_text += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @strpd, i32 0, i32 0), double %"+(reg-1)+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @strpd, i32 0, i32 0), double %"+(reg-1)+")\n";
         reg++;
     }
 
     static void scanf_i32(String id){
-        main_text += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strsi, i32 0, i32 0), i32* %"+id+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strsi, i32 0, i32 0), i32* %"+id+")\n";
         reg++;
     }
 
     static void scanf_double(String id){
-        main_text += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* %"+id+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* %"+id+")\n";
         reg++;
     }
 
@@ -62,63 +62,63 @@ public class LLVMGenerator {
     }
 
     public static void declare_i32(String id) {
-        main_text += "%"+id+" = alloca i32\n";
+        buffer += "%"+id+" = alloca i32\n";
     }
 
     public static void assign_i32(String id, String value) {
-        main_text += "store i32 "+value+", i32* %"+id+"\n";
+        buffer += "store i32 "+value+", i32* %"+id+"\n";
     }
 
     public static void declare_double(String id) {
-        main_text += "%"+id+" = alloca double\n";
+        buffer += "%"+id+" = alloca double\n";
     }
 
     public static void assign_double(String id, String value) {
-        main_text += "store double "+value+", double* %"+id+"\n";
+        buffer += "store double "+value+", double* %"+id+"\n";
     }
 
     public static void add_i32(String val1, String val2){
-        main_text += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
+        buffer += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
         reg++;
     }
 
     public static void add_double(String val1, String val2){
-        main_text += "%"+reg+" = fadd double "+val1+", "+val2+"\n";
+        buffer += "%"+reg+" = fadd double "+val1+", "+val2+"\n";
         reg++;
     }
 
     public static void mult_i32(String val1, String val2){
-        main_text += "%"+reg+" = mul i32 "+val1+", "+val2+"\n";
+        buffer += "%"+reg+" = mul i32 "+val1+", "+val2+"\n";
         reg++;
     }
 
     public static void mult_double(String val1, String val2){
-        main_text += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
+        buffer += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
         reg++;
     }
 
     public static void div_i32(String val1, String val2) {
-        main_text += "%"+reg+" = sdiv i32 "+val2+", "+val1+"\n";
+        buffer += "%"+reg+" = sdiv i32 "+val2+", "+val1+"\n";
         reg++;
     }
 
     public static void div_double(String val1, String val2) {
-        main_text += "%"+reg+" = fdiv double "+val2+", "+val1+"\n";
+        buffer += "%"+reg+" = fdiv double "+val2+", "+val1+"\n";
         reg++;
     }
 
     public static void sub_double(String val1, String val2) {
-        main_text += "%"+reg+" = fsub double "+val2+", "+val1+"\n";
+        buffer += "%"+reg+" = fsub double "+val2+", "+val1+"\n";
         reg++;
     }
 
     public static void sub_i32(String val1, String val2) {
-        main_text += "%"+reg+" = sub i32 "+val2+", "+val1+"\n";
+        buffer += "%"+reg+" = sub i32 "+val2+", "+val1+"\n";
         reg++;
     }
 
     public static void mod_i32(String val1, String val2) {
-        main_text += "%"+reg+" = srem i32 "+val2+", "+val1+"\n";
+        buffer += "%"+reg+" = srem i32 "+val2+", "+val1+"\n";
         reg++;
     }
 
@@ -126,32 +126,36 @@ public class LLVMGenerator {
 
     public static void ifEnd() {
         int b = brStack.pop();
-        main_text += "br label %false"+b+"\n";
-        main_text += "false"+b+":\n";
+        buffer += "br label %false"+b+"\n";
+        buffer += "false"+b+":\n";
     }
 
     public static void icmp(String leftExp, String rightExp, String operator) {
-        main_text += "%"+reg+" = load i32, i32* %"+leftExp+"\n";
+        buffer += "%"+reg+" = load i32, i32* %"+leftExp+"\n";
         reg++;
-        main_text += "%"+reg+" = icmp "+operator+" i32 %"+(reg-1)+", "+rightExp+"\n";
+        buffer += "%"+reg+" = icmp "+operator+" i32 %"+(reg-1)+", "+rightExp+"\n";
         reg++;
         br++;
-        main_text += "br i1 %"+(reg-1)+", label %true"+br+", label %false"+br+"\n";
-        main_text += "true"+br+":\n";
+        buffer += "br i1 %"+(reg-1)+", label %true"+br+", label %false"+br+"\n";
+        buffer += "true"+br+":\n";
         brStack.push(br);
     }
 
     public static void whileStart() {
         whileReg++;
-        main_text += "br label %while"+whileReg+"\n";
-        main_text += "while"+whileReg+":\n";
+        buffer += "br label %while"+whileReg+"\n";
+        buffer += "while"+whileReg+":\n";
         whlieRegStack.push(whileReg);
     }
 
     public static void whileEnd() {
         int r = whlieRegStack.pop();
-        main_text += "br label %while"+r+"\n";
+        buffer += "br label %while"+r+"\n";
         int b = brStack.pop();
-        main_text += "false"+b+":\n";
+        buffer += "false"+b+":\n";
+    }
+
+    public static void closeMain() {
+        main_text += buffer;
     }
 }
