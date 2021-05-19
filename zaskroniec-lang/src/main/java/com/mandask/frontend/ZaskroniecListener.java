@@ -28,6 +28,46 @@ public interface ZaskroniecListener extends ParseTreeListener {
 	 */
 	void exitStmt(ZaskroniecParser.StmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(ZaskroniecParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(ZaskroniecParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#fparam}.
+	 * @param ctx the parse tree
+	 */
+	void enterFparam(ZaskroniecParser.FparamContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#fparam}.
+	 * @param ctx the parse tree
+	 */
+	void exitFparam(ZaskroniecParser.FparamContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#fblock}.
+	 * @param ctx the parse tree
+	 */
+	void enterFblock(ZaskroniecParser.FblockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#fblock}.
+	 * @param ctx the parse tree
+	 */
+	void exitFblock(ZaskroniecParser.FblockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ZaskroniecParser#return_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturn_stmt(ZaskroniecParser.Return_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ZaskroniecParser#return_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturn_stmt(ZaskroniecParser.Return_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ZaskroniecParser#if_stmt}.
 	 * @param ctx the parse tree
 	 */

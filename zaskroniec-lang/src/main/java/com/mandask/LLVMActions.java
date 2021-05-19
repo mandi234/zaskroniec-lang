@@ -3,13 +3,9 @@ package com.mandask;
 import com.mandask.frontend.ZaskroniecBaseListener;
 import com.mandask.frontend.ZaskroniecListener;
 import com.mandask.frontend.ZaskroniecParser;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+
+import java.util.*;
 
 
 enum VarType{ INT, REAL, UNKNOWN}
@@ -23,15 +19,21 @@ class Value{
     }
 }
 
-public class LLVMActions extends ZaskroniecBaseListener{
+public class LLVMActions extends ZaskroniecBaseListener {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
 
+    Set<String> globalNames = new HashSet<>();
+    Set<String> functions = new HashSet<>();
+    Set<String> localNames = new HashSet<>();
+    String value, function;
+    Boolean global;
+
 
     @Override
     public void enterFile(ZaskroniecParser.FileContext ctx) {
-
+        global = true;
     }
 
     @Override
@@ -46,6 +48,46 @@ public class LLVMActions extends ZaskroniecBaseListener{
 
     @Override
     public void exitStmt(ZaskroniecParser.StmtContext ctx) {
+
+    }
+
+    @Override
+    public void enterFunction(ZaskroniecParser.FunctionContext ctx) {
+
+    }
+
+    @Override
+    public void exitFunction(ZaskroniecParser.FunctionContext ctx) {
+
+    }
+
+    @Override
+    public void enterFparam(ZaskroniecParser.FparamContext ctx) {
+
+    }
+
+    @Override
+    public void exitFparam(ZaskroniecParser.FparamContext ctx) {
+
+    }
+
+    @Override
+    public void enterFblock(ZaskroniecParser.FblockContext ctx) {
+        global = false;
+    }
+
+    @Override
+    public void exitFblock(ZaskroniecParser.FblockContext ctx) {
+
+    }
+
+    @Override
+    public void enterReturn_stmt(ZaskroniecParser.Return_stmtContext ctx) {
+
+    }
+
+    @Override
+    public void exitReturn_stmt(ZaskroniecParser.Return_stmtContext ctx) {
 
     }
 
@@ -340,6 +382,8 @@ public class LLVMActions extends ZaskroniecBaseListener{
     public void exitParaphrase(ZaskroniecParser.ParaphraseContext ctx) {
 
     }
+
+
 
     private void error(int line, String msg) {
         System.err.println("Error, line "+line+", "+msg);

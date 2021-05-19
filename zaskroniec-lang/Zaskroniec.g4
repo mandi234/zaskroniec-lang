@@ -7,7 +7,26 @@ stmt: print_stmt ';'
     | scan_real_stmt ';'
     | assign_stmt ';'
     | if_stmt
-    | while_stmt;
+    | while_stmt
+    | function
+    ;
+
+function: FUNCTION fparam fblock;
+
+fparam: ID;
+
+fblock: '{' stmt* return_stmt '}';
+
+return_stmt: 'zzzwroc' expression ';';
+
+//assign_method: ID ASSIGN ID parameter_declaration;
+
+//method: 'fcja' ID parameter_declaration method_block;
+
+//method_block: '{' stmt* return_stmt '}';
+
+
+//parameter_declaration: '(' ID? (',' ID)* ')';
 
 if_stmt: 'jesssli' '(' boolean_exp ')' stmt* 'ssskonczjesssli';
 
@@ -58,19 +77,23 @@ paraphrase: '(' expression ')';
 
 SCAN : 'ssskanuj';
 
+FUNCTION: 'funkcssja';
+
+ENDFUNCTION: 'ssskonczfunkcssja';
+
 PRINT: 'wypisssz';
 
 REAL_DECLARATION : 'dabl';
 
 INT_DECLARATION : 'int';
 
-ID: [a-zA-Z_][a-zA-Z_0-9]+;
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
 
 
 REAL: [-+]?'0'..'9'+'.''0'..'9'+
     ;
 
-INT: [-+]?'0'..'9'+
+INT: [-+]?[0-9_]+
     ;
 
 ASSIGN : '=';

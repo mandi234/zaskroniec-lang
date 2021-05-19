@@ -4,6 +4,7 @@ import java.util.Stack;
 
 public class LLVMGenerator {
     static String header_text = "";
+    static String buffer = "";
     static String main_text = "";
     static int reg = 1;
     static int br = 0;

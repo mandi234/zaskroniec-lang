@@ -1,6 +1,12 @@
-kloc = 2;
-jesssli (kloc == 3)
-    kloc = 4;
-    wypisssz kloc;
-ssskonczjesssli
+kloc = 0;
+test = 1000;
+podczasss (kloc < 5)
+      wypisssz kloc;
+      jesssli ( kloc == 3 )
+        wypisssz test;
+      ssskonczjesssli
+      kloc = kloc + 1;
+ssskonczpodczasss
+bb = 999;
+wypisssz bb;
 wypisssz kloc;
