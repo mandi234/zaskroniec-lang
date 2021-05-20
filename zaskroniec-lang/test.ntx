@@ -1,11 +1,7 @@
-z = 5;
-
 funkcssja fun {
-    z = 3;
-    wypisssz z;
-    zzzwroc z;
+    kloc = 10;
+    zzzwroc kloc;
 }
 
 g = fun;
-wypisssz z;
-
+wypisssz g;

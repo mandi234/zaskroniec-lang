@@ -183,4 +183,9 @@ public class LLVMGenerator {
         buffer = "";
         reg = mainReg;
     }
+
+    public static void callFunction(String id) {
+        buffer += "%"+reg+" = call i32 @"+id+"()\n";
+        reg++;
+    }
 }

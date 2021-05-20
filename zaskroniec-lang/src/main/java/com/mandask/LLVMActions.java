@@ -270,7 +270,6 @@ public class LLVMActions extends ZaskroniecBaseListener {
     public void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) {
         String ID = ctx.ID().getText();
         Value v = stack.pop();
-        String scopedID = null;
         if (global)
             exitGlobalAssign_stmt(ctx, ID, v);
         else
@@ -408,16 +407,19 @@ public class LLVMActions extends ZaskroniecBaseListener {
         if (ctx.ID() != null) {
             String ID = ctx.ID().getText();
             String scopedID = "";
+            Boolean isFunction = false;
             VarType type = null;
             if(localVariables.containsKey("%"+ID)) {
                 scopedID = "%"+ID;
                 type = localVariables.get(scopedID);
-            } else {
+            } else if(globalVariables.containsKey("@"+ID)) {
                 scopedID = "@"+ID;
                 type = globalVariables.get(scopedID);
+            } else if(functions.contains(ID)) {
+                isFunction = true;
             }
 
-            if (type != null) {
+            if (type != null || isFunction) {
                 if (type == VarType.INT) {
                     LLVMGenerator.load_i32(scopedID);
                     stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.INT));
@@ -425,6 +427,9 @@ public class LLVMActions extends ZaskroniecBaseListener {
                 if (type == VarType.REAL) {
                     LLVMGenerator.load_double(scopedID);
                     stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.INT));
+                }
+                if (isFunction) {
+                    LLVMGenerator.callFunction(ID);
                 }
             } else {
                 error(ctx.getStart().getLine(), "unknown variable " + ID);
