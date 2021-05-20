@@ -1,20 +1,13 @@
     #include<stdio.h>
 
-    int z=4;
-    int x = 4;
-
+    int z=5;
+    z = 3;
     int func(){
-      z = 2;
-      return z;
+      int a = z+3;
+      return a;
     }
 
     int main(){
-      x = 5;
-
       printf("%d\n",z);
-      z=func();
-      printf("%d\n",z);
-
-      int j = 5;
     }
 

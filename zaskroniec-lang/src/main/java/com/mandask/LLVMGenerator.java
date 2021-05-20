@@ -16,12 +16,12 @@ public class LLVMGenerator {
 
 
     static void load_i32(String id) {
-        buffer += "%"+reg+" = load i32, i32* %"+id+"\n";
+        buffer += "%"+reg+" = load i32, i32* "+id+"\n";
         reg++;
     }
 
     static void load_double(String id) {
-        buffer += "%"+reg+" = load double, double* %"+id+"\n";
+        buffer += "%"+reg+" = load double, double* "+id+"\n";
         reg++;
     }
 
@@ -63,20 +63,28 @@ public class LLVMGenerator {
         return text;
     }
 
-    public static void declare_i32(String id) {
+    public static void declare_i32(String id, Boolean global) {
+        if (global) {
+            header_text += "@"+id+" = global i32 0\n";
+            return;
+        }
         buffer += "%"+id+" = alloca i32\n";
     }
 
-    public static void assign_i32(String id, String value) {
-        buffer += "store i32 "+value+", i32* %"+id+"\n";
-    }
-
-    public static void declare_double(String id) {
+    public static void declare_double(String id, Boolean global) {
+        if (global) {
+            header_text += "@"+id+" = global double 0\n";
+            return;
+        }
         buffer += "%"+id+" = alloca double\n";
     }
 
+    public static void assign_i32(String id, String value) {
+        buffer += "store i32 "+value+", i32* "+id+"\n";
+    }
+
     public static void assign_double(String id, String value) {
-        buffer += "store double "+value+", double* %"+id+"\n";
+        buffer += "store double "+value+", double* "+id+"\n";
     }
 
     public static void add_i32(String val1, String val2){

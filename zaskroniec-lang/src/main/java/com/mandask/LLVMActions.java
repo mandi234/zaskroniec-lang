@@ -3,17 +3,19 @@ package com.mandask;
 import com.mandask.frontend.ZaskroniecBaseListener;
 import com.mandask.frontend.ZaskroniecListener;
 import com.mandask.frontend.ZaskroniecParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 
 import java.util.*;
 
 
-enum VarType{ INT, REAL, UNKNOWN}
+enum VarType {INT, REAL, UNKNOWN}
 
-class Value{
+class Value {
     public String name;
     public VarType type;
-    public Value( String name, VarType type) {
+
+    public Value(String name, VarType type) {
         this.name = name;
         this.type = type;
     }
@@ -21,13 +23,11 @@ class Value{
 
 public class LLVMActions extends ZaskroniecBaseListener {
 
-    HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    HashMap<String, VarType> localVariables = new HashMap<String, VarType>();
+    HashMap<String, VarType> globalVariables = new HashMap<>();
+    HashMap<String, VarType> variables = new HashMap<>();
     Stack<Value> stack = new Stack<Value>();
-
-    Set<String> globalNames = new HashSet<>();
     Set<String> functions = new HashSet<>();
-    Set<String> localNames = new HashSet<>();
-
     String function = "";
     Boolean global;
 
@@ -83,6 +83,8 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitFblock(ZaskroniecParser.FblockContext ctx) {
+        localVariables.clear();
+
         LLVMGenerator.functionEnd();
     }
 
@@ -129,7 +131,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
             LLVMGenerator.icmp(leftExp, rightExp, operatorMap.get(operator));
         } else {
             ctx.getStart().getLine();
-            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+leftExp);
+            System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + leftExp);
         }
     }
 
@@ -209,9 +211,9 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) {
         String ID = ctx.ID().getText();
-        if(!variables.containsKey(ID))
-            LLVMGenerator.declare_i32(ID);
-        variables.put(ID, VarType.INT );
+        if (!variables.containsKey(ID))
+            LLVMGenerator.declare_i32(ID, global);
+        variables.put(ID, VarType.INT);
         LLVMGenerator.scanf_i32(ID);
     }
 
@@ -223,9 +225,9 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) {
         String ID = ctx.ID().getText();
-        if(!variables.containsKey(ID))
-            LLVMGenerator.declare_double(ID);
-        variables.put(ID, VarType.REAL );
+        if (!variables.containsKey(ID))
+            LLVMGenerator.declare_double(ID, global);
+        variables.put(ID, VarType.REAL);
         LLVMGenerator.scanf_double(ID);
     }
 
@@ -237,16 +239,25 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitPrint_stmt(ZaskroniecParser.Print_stmtContext ctx) {
         String ID = ctx.ID().getText();
-        VarType type = variables.get(ID);
-        if( type != null ) {
-            if( type == VarType.INT ){
-                LLVMGenerator.printf_i32( ID );
+        String scopedID = "";
+        VarType type = null;
+        if (localVariables.containsKey("%" + ID)) {
+            scopedID = "%" + ID;
+            type = localVariables.get(scopedID);
+        } else {
+            scopedID = "@" + ID;
+            type = globalVariables.get(scopedID);
+        }
+
+        if (type != null) {
+            if (type == VarType.INT) {
+                LLVMGenerator.printf_i32(scopedID);
             }
-            if( type == VarType.REAL ){
-                LLVMGenerator.printf_double( ID );
+            if (type == VarType.REAL) {
+                LLVMGenerator.printf_double(scopedID);
             }
         } else {
-            error(ctx.getStart().getLine(), "unknown variable "+ID);
+            error(ctx.getStart().getLine(), "unknown variable " + ID);
         }
     }
 
@@ -259,27 +270,61 @@ public class LLVMActions extends ZaskroniecBaseListener {
     public void exitAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx) {
         String ID = ctx.ID().getText();
         Value v = stack.pop();
-        if (! variables.containsKey(ID)) {
-            variables.put(ID, v.type);
-            if( v.type == VarType.INT ){
-                LLVMGenerator.declare_i32(ID);
-                LLVMGenerator.assign_i32(ID, v.name);
-            }
-            if( v.type == VarType.REAL ){
-                LLVMGenerator.declare_double(ID);
-                LLVMGenerator.assign_double(ID, v.name);
-            }
+        String scopedID = null;
+        if (global)
+            exitGlobalAssign_stmt(ctx, ID, v);
+        else
+            exitLocalAssign_stmt(ctx, ID, v);
+    }
+
+    private void createVariableWithValue(String id, String scopedID, Value v, Boolean global) {
+        if (v.type == VarType.INT) {
+            LLVMGenerator.declare_i32(id, global);
+            LLVMGenerator.assign_i32(scopedID, v.name);
+        }
+        if (v.type == VarType.REAL) {
+            LLVMGenerator.declare_double(id, global);
+            LLVMGenerator.assign_double(scopedID, v.name);
+        }
+    }
+
+    private void exitLocalAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx, String id, Value v) {
+        String localID = "%" + id;
+        if (!localVariables.containsKey(localID)) {
+
+            localVariables.put(localID, v.type);
+            createVariableWithValue(id, localID, v, global);
         } else {
-            if (v.type == variables.get(ID)) {
-                if(v.type == VarType.INT) {
-                    LLVMGenerator.assign_i32(ID, v.name);
-                }
-                if(v.type == VarType.REAL) {
-                    LLVMGenerator.assign_double(ID, v.name);
-                }
+            if (v.type == localVariables.get(localID)) {
+                assignToExistingVariable(localID, v);
             } else {
                 error(ctx.getStart().getLine(), ctx.getChild(2).getText() + " type mismatch");
             }
+        }
+    }
+
+    private void exitGlobalAssign_stmt(ZaskroniecParser.Assign_stmtContext ctx, String id, Value v) {
+        String globalID = "@" + id;
+        if (!globalVariables.containsKey(globalID)) {
+
+            globalVariables.put(globalID, v.type);
+            createVariableWithValue(id, globalID, v, global);
+        } else {
+            if (v.type == globalVariables.get(globalID)) {
+                assignToExistingVariable(globalID, v);
+            } else {
+                error(ctx.getStart().getLine(), ctx.getChild(2).getText() + " type mismatch");
+
+            }
+        }
+    }
+
+    private void assignToExistingVariable(String scopedID, Value v) {
+        if (v.type == VarType.INT) {
+            LLVMGenerator.assign_i32(scopedID, v.name);
+        }
+        if (v.type == VarType.REAL) {
+            LLVMGenerator.assign_double(scopedID, v.name);
         }
     }
 
@@ -291,9 +336,9 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitNumber(ZaskroniecParser.NumberContext ctx) {
         if (ctx.REAL() == null) {
-            stack.push( new Value(ctx.INT().getText(), VarType.INT) );
+            stack.push(new Value(ctx.INT().getText(), VarType.INT));
         } else {
-            stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
+            stack.push(new Value(ctx.REAL().getText(), VarType.REAL));
         }
     }
 
@@ -304,52 +349,52 @@ public class LLVMActions extends ZaskroniecBaseListener {
 
     @Override
     public void exitExpression(ZaskroniecParser.ExpressionContext ctx) {
-        if(ctx.getChildCount() > 1 && stack.size()>=2) {
+        if (ctx.getChildCount() > 1 && stack.size() >= 2) {
             Value v1 = stack.pop();
             Value v2 = stack.pop();
             if (v1.type == v2.type) {
                 String operator = ctx.getChild(1).getText();
-                switch(operator){
+                switch (operator) {
                     case "+":
                         if (v1.type == VarType.INT) {
                             LLVMGenerator.add_i32(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                         } else {
                             LLVMGenerator.add_double(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.REAL));
                         }
                         break;
                     case "*":
                         if (v1.type == VarType.INT) {
                             LLVMGenerator.mult_i32(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                         } else {
                             LLVMGenerator.mult_double(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.REAL));
                         }
                         break;
                     case "/":
                         if (v1.type == VarType.INT) {
                             LLVMGenerator.div_i32(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                         } else {
                             LLVMGenerator.div_double(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.REAL));
                         }
                         break;
                     case "-":
                         if (v1.type == VarType.INT) {
                             LLVMGenerator.sub_i32(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                         } else {
                             LLVMGenerator.sub_double(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.REAL));
                         }
                         break;
                     case "%":
                         if (v1.type == VarType.INT) {
                             LLVMGenerator.mod_i32(v1.name, v2.name);
-                            stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                            stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                         } else {
                             error(ctx.getStart().getLine(), "wrong type on modulo operation, int expected");
                         }
@@ -362,15 +407,24 @@ public class LLVMActions extends ZaskroniecBaseListener {
         }
         if (ctx.ID() != null) {
             String ID = ctx.ID().getText();
-            VarType type = variables.get(ID);
+            String scopedID = "";
+            VarType type = null;
+            if(localVariables.containsKey("%"+ID)) {
+                scopedID = "%"+ID;
+                type = localVariables.get(scopedID);
+            } else {
+                scopedID = "@"+ID;
+                type = globalVariables.get(scopedID);
+            }
+
             if (type != null) {
                 if (type == VarType.INT) {
-                    LLVMGenerator.load_i32(ID);
-                    stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                    LLVMGenerator.load_i32(scopedID);
+                    stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.INT));
                 }
                 if (type == VarType.REAL) {
-                    LLVMGenerator.load_double(ID);
-                    stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT));
+                    LLVMGenerator.load_double(scopedID);
+                    stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.INT));
                 }
             } else {
                 error(ctx.getStart().getLine(), "unknown variable " + ID);
@@ -389,9 +443,8 @@ public class LLVMActions extends ZaskroniecBaseListener {
     }
 
 
-
     private void error(int line, String msg) {
-        System.err.println("Error, line "+line+", "+msg);
+        System.err.println("Error, line " + line + ", " + msg);
         System.exit(1);
     }
 }
