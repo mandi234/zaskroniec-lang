@@ -1,13 +1,12 @@
     #include<stdio.h>
 
-    int z=5;
-    z = 3;
     int func(){
-      int a = z+3;
-      return a;
+      int kloc = 10;
+      return kloc;
     }
 
     int main(){
-      printf("%d\n",z);
+      int abc = func();
+      printf("%d\n", abc);
     }
 

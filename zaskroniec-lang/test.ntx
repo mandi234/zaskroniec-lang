@@ -1,5 +1,8 @@
+z = 15;
 funkcssja fun {
     kloc = 10;
+    b = 15;
+    wypisssz b;
     zzzwroc kloc;
 }
 

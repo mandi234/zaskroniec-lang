@@ -84,7 +84,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitFblock(ZaskroniecParser.FblockContext ctx) {
         localVariables.clear();
-
+        stack.clear();
         LLVMGenerator.functionEnd();
     }
 
@@ -426,10 +426,11 @@ public class LLVMActions extends ZaskroniecBaseListener {
                 }
                 if (type == VarType.REAL) {
                     LLVMGenerator.load_double(scopedID);
-                    stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.INT));
+                    stack.push(new Value(scopedID.substring(0, 1) + (LLVMGenerator.reg - 1), VarType.REAL));
                 }
                 if (isFunction) {
                     LLVMGenerator.callFunction(ID);
+                    stack.push(new Value("%" + (LLVMGenerator.reg-1), VarType.INT));
                 }
             } else {
                 error(ctx.getStart().getLine(), "unknown variable " + ID);
