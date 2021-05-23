@@ -1,6 +1,8 @@
     #include<stdio.h>
 
+    double pep;
     int func(){
+      double star = 2.2;
       int kloc = 10;
       return kloc;
     }

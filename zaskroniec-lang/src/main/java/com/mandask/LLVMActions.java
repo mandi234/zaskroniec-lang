@@ -127,8 +127,10 @@ public class LLVMActions extends ZaskroniecBaseListener {
         String rightExp = ctx.getChild(0).getChild(2).getText();
 
 
-        if (variables.containsKey(leftExp)) {
-            LLVMGenerator.icmp(leftExp, rightExp, operatorMap.get(operator));
+        if (localVariables.containsKey("%" + leftExp)) {
+            LLVMGenerator.icmp("%" + leftExp, rightExp, operatorMap.get(operator));
+        } else if (globalVariables.containsKey("@" + leftExp)) {
+            LLVMGenerator.icmp("@" + leftExp, rightExp, operatorMap.get(operator));
         } else {
             ctx.getStart().getLine();
             System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + leftExp);
@@ -211,10 +213,15 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitScan_int_stmt(ZaskroniecParser.Scan_int_stmtContext ctx) {
         String ID = ctx.ID().getText();
-        if (!variables.containsKey(ID))
+        if (!localVariables.containsKey("%" + ID) && !globalVariables.containsKey("@" + ID))
             LLVMGenerator.declare_i32(ID, global);
-        variables.put(ID, VarType.INT);
-        LLVMGenerator.scanf_i32(ID);
+        if (!global) {
+            localVariables.put("%" + ID, VarType.INT);
+            LLVMGenerator.scanf_i32("%" + ID);
+        } else {
+            globalVariables.put("@" + ID, VarType.INT);
+            LLVMGenerator.scanf_i32("@" + ID);
+        }
     }
 
     @Override
@@ -225,10 +232,16 @@ public class LLVMActions extends ZaskroniecBaseListener {
     @Override
     public void exitScan_real_stmt(ZaskroniecParser.Scan_real_stmtContext ctx) {
         String ID = ctx.ID().getText();
-        if (!variables.containsKey(ID))
+        if (!localVariables.containsKey("%" + ID) && !globalVariables.containsKey("@" + ID))
             LLVMGenerator.declare_double(ID, global);
-        variables.put(ID, VarType.REAL);
-        LLVMGenerator.scanf_double(ID);
+        if (!global) {
+            localVariables.put("%" + ID, VarType.REAL);
+            LLVMGenerator.scanf_double("%" + ID);
+        } else {
+            globalVariables.put("@" + ID, VarType.REAL);
+            LLVMGenerator.scanf_double("@" + ID);
+        }
+
     }
 
     @Override
@@ -409,13 +422,13 @@ public class LLVMActions extends ZaskroniecBaseListener {
             String scopedID = "";
             Boolean isFunction = false;
             VarType type = null;
-            if(localVariables.containsKey("%"+ID)) {
-                scopedID = "%"+ID;
+            if (localVariables.containsKey("%" + ID)) {
+                scopedID = "%" + ID;
                 type = localVariables.get(scopedID);
-            } else if(globalVariables.containsKey("@"+ID)) {
-                scopedID = "@"+ID;
+            } else if (globalVariables.containsKey("@" + ID)) {
+                scopedID = "@" + ID;
                 type = globalVariables.get(scopedID);
-            } else if(functions.contains(ID)) {
+            } else if (functions.contains(ID)) {
                 isFunction = true;
             }
 
@@ -430,7 +443,7 @@ public class LLVMActions extends ZaskroniecBaseListener {
                 }
                 if (isFunction) {
                     LLVMGenerator.callFunction(ID);
-                    stack.push(new Value("%" + (LLVMGenerator.reg-1), VarType.INT));
+                    stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.INT));
                 }
             } else {
                 error(ctx.getStart().getLine(), "unknown variable " + ID);

@@ -1,0 +1,65 @@
+zz = 15;
+funkcssja fun {
+    aa = 10;
+    zzzwroc aa;
+}
+
+funkcssja abc {
+    ab1 = 2;
+    zzz = 33;
+    zzzwroc zzz;
+}
+
+
+jesssli ( zz == 15 )
+    wypisssz zz;
+
+ssskonczjesssli
+g = fun;
+wypisssz g;
+je = abc;
+wypisssz je;
+
+
+#######################
+
+zz = 15;
+
+funkcssja fun {
+    aa = 10;
+    zz = 35;
+    zzzwroc aa;
+}
+
+iter = 0;
+bb = fun;
+podczasss (iter < 10 )
+    wypisssz zz;
+    wypisssz iter;
+    iter = iter + 1;
+ssskonczpodczasss
+wypisssz bb;
+
+######################
+
+
+zz = 15;
+ssskanuj dabl opp;
+funkcssja fun {
+    aa = 10;
+    zz = 35;
+    zzzwroc aa;
+}
+
+iter = 0;
+bb = fun;
+podczasss (iter < 10 )
+    wypisssz zz;
+    wypisssz iter;
+    iter = iter + 1;
+ssskonczpodczasss
+wypisssz bb;
+wypisssz opp;
+
+
+#######################

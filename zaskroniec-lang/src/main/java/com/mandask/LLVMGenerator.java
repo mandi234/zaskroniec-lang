@@ -38,12 +38,12 @@ public class LLVMGenerator {
     }
 
     static void scanf_i32(String id){
-        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strsi, i32 0, i32 0), i32* %"+id+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strsi, i32 0, i32 0), i32* "+id+")\n";
         reg++;
     }
 
     static void scanf_double(String id){
-        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* %"+id+")\n";
+        buffer += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* "+id+")\n";
         reg++;
     }
 
@@ -73,7 +73,7 @@ public class LLVMGenerator {
 
     public static void declare_double(String id, Boolean global) {
         if (global) {
-            header_text += "@"+id+" = global double 0\n";
+            header_text += "@"+id+" = global double 0.000000e+00\n";
             return;
         }
         buffer += "%"+id+" = alloca double\n";
@@ -141,7 +141,7 @@ public class LLVMGenerator {
     }
 
     public static void icmp(String leftExp, String rightExp, String operator) {
-        buffer += "%"+reg+" = load i32, i32* %"+leftExp+"\n";
+        buffer += "%"+reg+" = load i32, i32* "+leftExp+"\n";
         reg++;
         buffer += "%"+reg+" = icmp "+operator+" i32 %"+(reg-1)+", "+rightExp+"\n";
         reg++;

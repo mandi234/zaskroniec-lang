@@ -1,10 +1,9 @@
-z = 15;
+zz = 15;
+ssskanuj dabl opp;
 funkcssja fun {
-    kloc = 10;
-    b = 15;
-    wypisssz b;
-    zzzwroc kloc;
+    aa = 10;
+    zz = 35;
+    zzzwroc aa;
 }
 
-g = fun;
-wypisssz g;
+wypisssz fun;
